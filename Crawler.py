@@ -81,7 +81,7 @@ class AccessToUrl:
             fillindata = (i)
             #insert_2 = "INSERT OR REPLACE INTO Member (user_id, course_id) VALUES ( ?, ? )"
             try:
-                self.cur.execute(insert_1,fillindata)
+                self.cur.execute(insert_1,(fillindata,))
             except:
                 pass
             self.conn.commit()
@@ -93,7 +93,7 @@ class AccessToUrl:
             fillindata2 = (j)
             #insert_2 = "INSERT OR REPLACE INTO Member (user_id, course_id) VALUES ( ?, ? )"
             try:
-                self.cur.execute(insert_2,fillindata2)
+                self.cur.execute(insert_2,(fillindata2,))
             except:
                 pass
             self.conn.commit()
