@@ -98,7 +98,7 @@ class AccessToUrl:
                 pass
             self.conn.commit()
 
-
+'''
 class grabfromDB:
 
     def __init__(self):
@@ -111,10 +111,19 @@ class grabfromDB:
         cur = db_connection.cursor()
         rows = c.execute("SELECT id, name, price FROM %s;" % self.tablename)
 
+	def getname(self):
+        cur.execute("SELECT * FROM DBName=:dbname WHERE price < 30000",{'dbname':self.tablename})  #with db_connection:
+
+	def updateprice(self):
+		cur.execute("UPDATE DBName=:dbname SET price=:price",{'dbname':self.tablename,'price':self.price}) #with db_connection:
+	def removedata():
+        pass
+'''
+
 
 
 
 #------------------Main Code==============================
 
-Cra = AccessToUrl()
-Cra.fetch()
+#Cra = AccessToUrl()
+#Cra.fetch()
