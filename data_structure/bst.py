@@ -29,5 +29,4 @@ class BST(object):
                     current_node.right_node = node
                     break
 
-
             
