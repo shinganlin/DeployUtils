@@ -27,47 +27,47 @@
         c.NotebookApp.port = 1823
 
         ```
-#### Nginx .conf Setting
+#### Nginx .conf Setting 
 1. Install Nginx 
 2. Create a .conf in /etc/nginx/conf.d/ 
-```
-upstream jupyterurl {
-        server XXX.XXX.XXX.XXX:1823;
-}
-server {
-    listen 8787;
-    listen [::]:8787;
-    
-    location /jupyter {
-            rewrite ^/jupyter/(.*)$ /jupyter/$1 break;
-            proxy_pass http://jupyterurl/;
-            proxy_redirect http://jupyterurl/ $scheme://$http_host/jupyter/;
-            
-            proxy_set_header Host $http_host;
-            proxy_set_header X-Real-IP $remote_addr;
-            proxy_set_header X-Forwarded-FOr $proxy_add_x_forwarded_for;
-            proxy_set_header X-Nginx-Proxy true;
+	```
+	upstream jupyterurl {
+		server XXX.XXX.XXX.XXX:1823;
+	}
+	server {
+	    listen 8787;
+	    listen [::]:8787;
 
-            proxy_http_version 1.1;
-            proxy_set_header Upgrade \$http_upgrade;
-            proxy_set_header Connection "Upgrade";
-            proxy_read_timeout 86400;
-            client_max_body_size 1024M;   
-        }
+	    location /jupyter {
+		    rewrite ^/jupyter/(.*)$ /jupyter/$1 break;
+		    proxy_pass http://jupyterurl/;
+		    proxy_redirect http://jupyterurl/ $scheme://$http_host/jupyter/;
 
-    location ~* /jupyter/(api/kernels/[^/]+/(channels|iopub|shell|stdin)|terminals/websocket)/? {
-            proxy_pass http://jupyterurl;
-			
-            proxy_set_header Host $http_host;
-            proxy_set_header X-Real-IP $remote_addr;
-            proxy_set_header X-Forwarded-FOr $proxy_add_x_forwarded_for;
-            proxy_set_header X-Nginx-Proxy true;
+		    proxy_set_header Host $http_host;
+		    proxy_set_header X-Real-IP $remote_addr;
+		    proxy_set_header X-Forwarded-FOr $proxy_add_x_forwarded_for;
+		    proxy_set_header X-Nginx-Proxy true;
 
-            proxy_http_version 1.1;
-            proxy_set_header Upgrade "websocket";
-            proxy_set_header Connection "Upgrade";
-            proxy_read_timeout 86400;
-            client_max_body_size 1024M;   
-        }
-}
-```
+		    proxy_http_version 1.1;
+		    proxy_set_header Upgrade \$http_upgrade;
+		    proxy_set_header Connection "Upgrade";
+		    proxy_read_timeout 86400;
+		    client_max_body_size 1024M;   
+		}
+
+	    location ~* /jupyter/(api/kernels/[^/]+/(channels|iopub|shell|stdin)|terminals/websocket)/? {
+		    proxy_pass http://jupyterurl;
+
+		    proxy_set_header Host $http_host;
+		    proxy_set_header X-Real-IP $remote_addr;
+		    proxy_set_header X-Forwarded-FOr $proxy_add_x_forwarded_for;
+		    proxy_set_header X-Nginx-Proxy true;
+
+		    proxy_http_version 1.1;
+		    proxy_set_header Upgrade "websocket";
+		    proxy_set_header Connection "Upgrade";
+		    proxy_read_timeout 86400;
+		    client_max_body_size 1024M;   
+		}
+	}
+	```
